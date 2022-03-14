@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 //import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-//import { auth, provider } from "../firebase";
+import { auth, provider } from "../firebase";
 // import {
 //   selectUserName,
 //   selectUserPhoto,
@@ -12,7 +11,7 @@ import styled from "styled-components";
 
 const Header = (props) => {
   //const dispatch = useDispatch();
-  const history = useHistory();
+  //const history = useHistory();
   //const userName = useSelector(selectUserName);
   //const userPhoto = useSelector(selectUserPhoto);
 
@@ -26,6 +25,15 @@ const Header = (props) => {
   //   }, [userName]);
 
   const handleAuth = () => {
+    auth
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log("success");
+        console.log(result);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
     // if (!userName) {
     //   auth
     //     .signInWithPopup(provider)
@@ -147,6 +155,7 @@ const NavMenu = styled.div`
     display: flex;
     align-items: center;
     padding: 0 12px;
+    cursor: pointer;
     img {
       height: 20px;
       min-width: 20px;
@@ -186,9 +195,9 @@ const NavMenu = styled.div`
       }
     }
   }
-  /* @media (max-width: 768px) {
+  @media (max-width: 768px) {
     display: none;
-  } */
+  }
 `;
 
 const Login = styled.a`
@@ -199,6 +208,7 @@ const Login = styled.a`
   border: 1px solid #f9f9f9;
   border-radius: 4px;
   transition: all 0.2s ease 0s;
+  cursor: pointer;
   &:hover {
     background-color: #f9f9f9;
     color: #000;
